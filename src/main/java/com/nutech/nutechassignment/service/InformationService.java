@@ -1,4 +1,4 @@
 package com.nutech.nutechassignment.service;
 
-public class UserService {
+public interface InformationService {
 }
