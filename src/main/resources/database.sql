@@ -15,6 +15,8 @@ CREATE TABLE t_user
 INSERT INTO t_user VALUES ('damar@email.com', 'Damar', 'Galih Anshary', 'damar123', 125000);
 INSERT INTO t_user VALUES ('damaruser@email.com', 'Damar','damar123', 'Anshary', 0);
 
+SELECT * FROM t_user;
+
 DROP TABLE IF EXISTS t_role;
 CREATE TABLE t_role
 (
@@ -42,12 +44,18 @@ INSERT INTO t_user_role VALUES ('damaruser@email.com', 'ROLE_USER');
 DROP TABLE IF EXISTS t_banner;
 CREATE TABLE t_banner
 (
-    ID           BIGINT       NOT NULL,
+    ID           BIGINT       NOT NULL AUTO_INCREMENT,
     BANNER_NAME  VARCHAR(100) NOT NULL,
     BANNER_IMAGE VARCHAR(255) NOT NULL,
     DESCRIPTION  VARCHAR(255) NOT NULL,
     PRIMARY KEY (ID)
 ) ENGINE InnoDB;
+
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 1', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 2', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 3', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 4', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 5', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
 
 DROP TABLE IF EXISTS t_service;
 CREATE TABLE t_service
@@ -58,6 +66,8 @@ CREATE TABLE t_service
     TARIFF BIGINT       NOT NULL,
     PRIMARY KEY (CODE)
 ) ENGINE InnoDB;
+
+INSERT INTO t_service VALUES ('PAJAK', 'PAJAK PBB', 'https://nutech-integrasi.app/dummy.jpg', 40000);
 
 DROP TABLE IF EXISTS t_transaction;
 CREATE TABLE t_transaction

@@ -27,7 +27,7 @@ public class Transaction {
     private String description;
 
     @Column("total_amount")
-    private String totalAmount;
+    private Long totalAmount;
 
     @Column("created_on")
     private LocalDateTime createdOn;
