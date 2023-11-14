@@ -1,5 +1,7 @@
 package com.nutech.nutechassignment.model;
 
+
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,18 +14,17 @@ import org.springframework.data.relational.core.mapping.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_user")
-public class User {
+@Table(name = "t_banner")
+public class Banner {
     @Id
-    private String email;
+    @NotNull
+    private Long id;
 
-    @Column("first_name")
-    private String firstName;
+    @Column("banner_name")
+    private String bannerName;
 
-    @Column("last_name")
-    private String lastName;
+    @Column("banner_image")
+    private String bannerImage;
 
-    private String password;
-
-    private Long balance;
+    private String description;
 }

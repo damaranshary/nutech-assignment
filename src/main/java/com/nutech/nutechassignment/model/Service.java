@@ -1,9 +1,11 @@
 package com.nutech.nutechassignment.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -12,18 +14,18 @@ import org.springframework.data.relational.core.mapping.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_user")
-public class User {
+@Table(name = "t_service")
+public class Service {
     @Id
-    private String email;
+    @Column("code")
+    private String serviceCode;
 
-    @Column("first_name")
-    private String firstName;
+    @Column("name")
+    private String serviceName;
 
-    @Column("last_name")
-    private String lastName;
+    @Column("icon")
+    private String serviceIcon;
 
-    private String password;
-
-    private Long balance;
+    @Column("tariff")
+    private Long serviceTariff;
 }

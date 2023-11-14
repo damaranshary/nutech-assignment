@@ -5,25 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_user")
-public class User {
+@Table("t_role")
+public class Role {
+
     @Id
-    private String email;
+    private String id;
 
-    @Column("first_name")
-    private String firstName;
-
-    @Column("last_name")
-    private String lastName;
-
-    private String password;
-
-    private Long balance;
+    private String name;
 }
