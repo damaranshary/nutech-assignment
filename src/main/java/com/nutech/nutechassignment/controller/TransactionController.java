@@ -1,16 +1,17 @@
 package com.nutech.nutechassignment.controller;
 
 import com.nutech.nutechassignment.model.WebResponse;
+import com.nutech.nutechassignment.model.request.TopUpRequest;
 import com.nutech.nutechassignment.model.request.TransactionRequest;
 import com.nutech.nutechassignment.model.response.BalanceResponse;
+import com.nutech.nutechassignment.model.response.TransactionHistoryResponse;
+import com.nutech.nutechassignment.model.response.TransactionServiceResponse;
 import com.nutech.nutechassignment.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 public class TransactionController {
@@ -20,7 +21,7 @@ public class TransactionController {
 
     @GetMapping(value = "/balance",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<BalanceResponse> getBalance() throws SQLException {
+    public WebResponse<BalanceResponse> getBalance() {
         BalanceResponse balanceResponse;
         balanceResponse = transactionService.getBalance("damar@email.com");
 
@@ -29,25 +30,33 @@ public class TransactionController {
                 .status(402).message("success").build();
     }
 
-    @PostMapping("/topup")
-    public void topUpBalance(@RequestBody Long topUpAmount) {
+    @PostMapping(path = "/topup",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<BalanceResponse> topUpBalance(@RequestBody TopUpRequest topUpRequest) {
+        BalanceResponse balanceResponse = transactionService.doTopUp("damar@email.com", topUpRequest.getTotal_amount());
 
+        return WebResponse.<BalanceResponse>builder().status(200).data(balanceResponse).message("Success").build();
     }
 
     @PostMapping(path = "/transaction",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public void doTransaction(@RequestBody TransactionRequest request) throws SQLException {
+    public WebResponse<TransactionServiceResponse> doTransaction(@RequestBody TransactionRequest request) {
         String email = "damar@email.com";
-        System.out.println(request.getService_code());
 
-        transactionService.doTransaction(email, request.getService_code());
+        TransactionServiceResponse transactionResponse = transactionService.doTransaction(email, request.getService_code());
+
+        return WebResponse.<TransactionServiceResponse>builder().status(200).data(transactionResponse).message("success").build();
     }
 
     @GetMapping("/transaction/history")
-    public void getTransactionHistory(@RequestParam(name = "offset", required = false) Integer offset,
+    public WebResponse<List<TransactionHistoryResponse>> getTransactionHistory(@RequestParam(name = "offset", required = false) Integer offset,
                                       @RequestParam(name = "limit", required = false) Integer limit) {
 
+        List<TransactionHistoryResponse> transactionHistory = transactionService.getTransactionHistory("damar@email.com");
+
+        return WebResponse.<List<TransactionHistoryResponse>>builder().status(200).data(transactionHistory).message("success").build();
 
     }
 }

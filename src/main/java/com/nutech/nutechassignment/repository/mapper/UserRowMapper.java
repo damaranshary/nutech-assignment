@@ -7,16 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRowMapper implements RowMapper<User> {
-
     @Override
-    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         User user = new User();
 
-        user.setEmail(rs.getString("email"));
-        user.setFirstName(rs.getString("first_name"));
-        user.setLastName(rs.getString("last_name"));
-        user.setPassword(rs.getString("password"));
-        user.setBalance(rs.getLong("balance"));
+        user.setEmail(resultSet.getString("email"));
+        user.setFirstName(resultSet.getString("first_name"));
+        user.setLastName(resultSet.getString("last_name"));
+        user.setPassword(resultSet.getString("password"));
+        user.setBalance(resultSet.getLong("balance"));
 
         return user;
     }

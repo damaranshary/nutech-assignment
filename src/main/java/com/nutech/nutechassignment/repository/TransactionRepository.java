@@ -9,9 +9,7 @@ import java.util.List;
 
 public interface TransactionRepository {
 
-    List<TransactionHistoryResponse> findAllTransactionByUser_Id(String email) throws SQLException;
+    List<Transaction> findAllTransactionByUser_Id(String email);
 
-    void save(Transaction transaction) throws SQLException;
-
-    ServiceLayanan getServiceLayananByService_Code(String service_code) throws SQLException;
+    Integer save(Transaction transaction);
 }

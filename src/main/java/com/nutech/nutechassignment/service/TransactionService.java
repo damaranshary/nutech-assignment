@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface TransactionService {
 
-    List<TransactionHistoryResponse> getAllTransaction(String email) throws SQLException;
+    List<TransactionHistoryResponse> getTransactionHistory(String email);
 
-    BalanceResponse getBalance(String email) throws SQLException;
+    BalanceResponse getBalance(String email);
 
-    BalanceResponse doTopUp(String email, Long totalTopUp) throws SQLException;
+    BalanceResponse doTopUp(String email, Long totalTopUp);
 
-    TransactionServiceResponse doTransaction(String email, String service_code) throws SQLException;
+    TransactionServiceResponse doTransaction(String email, String service_code);
 
 }
