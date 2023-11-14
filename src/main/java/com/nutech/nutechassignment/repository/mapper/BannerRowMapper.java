@@ -10,6 +10,7 @@ public class BannerRowMapper implements RowMapper<Banner> {
     @Override
     public Banner mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         Banner banner = new Banner();
+
         banner.setId(resultSet.getLong("id"));
         banner.setBannerName(resultSet.getString("banner_name"));
         banner.setBannerImage(resultSet.getString("banner_image"));
