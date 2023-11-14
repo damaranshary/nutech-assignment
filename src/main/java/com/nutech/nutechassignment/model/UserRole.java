@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "user_role")
+@Table(name = "t_user_role")
 public class UserRole {
     @Column("email")
     private String userId;

@@ -21,7 +21,7 @@ public class Transaction {
     @Column("invoice_number")
     private String invoiceNumber;
 
-    @Column("type")
+    @Column("transaction_type")
     private String transactionType;
 
     private String description;
