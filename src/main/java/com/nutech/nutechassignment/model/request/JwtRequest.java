@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class JwtRequest {
     @NotBlank
-    @Email
+    @Email(message = "Email must be a well-formed email address")
     private String email;
 
     @NotBlank

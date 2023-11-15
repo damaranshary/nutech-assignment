@@ -1,6 +1,5 @@
 package com.nutech.nutechassignment.model.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -13,14 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UpdateUserRequest {
-    @JsonIgnore
     @NotBlank
-    private String email;
-
-    @NotBlank
-    @Pattern(regexp = "^[A-Za-z][A-Za-z ]+[A-Za-z]+$")
+    @Pattern(regexp = "^[A-Za-z][A-Za-z ]+[A-Za-z]+$", message = "Name can only contains letter and whitespace")
     private String first_name;
 
-    @Pattern(regexp = "^[A-Za-z][A-Za-z ]+[A-Za-z]+$")
+    @Pattern(regexp = "^[A-Za-z][A-Za-z ]+[A-Za-z]+$", message = "Name can only contains letter and whitespace")
     private String last_name;
 }
