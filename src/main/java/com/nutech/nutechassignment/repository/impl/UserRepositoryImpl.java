@@ -1,5 +1,6 @@
 package com.nutech.nutechassignment.repository.impl;
 
+import com.nutech.nutechassignment.exception.UserNotFoundException;
 import com.nutech.nutechassignment.model.User;
 import com.nutech.nutechassignment.repository.UserRepository;
 import com.nutech.nutechassignment.repository.mapper.UserRowMapper;
@@ -40,6 +41,11 @@ public class UserRepositoryImpl implements UserRepository {
         List<User> userList = jdbcTemplate.query(sqlQuery,
                 preparedStatement -> preparedStatement.setString(1, email),
                 new UserRowMapper());
+
+        // if we didn't find any user, then we return null
+        if (userList.size() < 1) {
+            return null;
+        }
 
         // Because we only want to get one user, we will only return the first index
         return userList.get(0);

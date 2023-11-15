@@ -1,5 +1,6 @@
 package com.nutech.nutechassignment.repository.impl;
 
+import com.nutech.nutechassignment.exception.ServiceNotFoundException;
 import com.nutech.nutechassignment.model.ServiceLayanan;
 import com.nutech.nutechassignment.repository.ServiceRepository;
 import com.nutech.nutechassignment.repository.mapper.ServiceRowMapper;
@@ -34,6 +35,10 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         List<ServiceLayanan> serviceLayananList = jdbcTemplate.query(sqlQuery,
                 preparedStatement -> preparedStatement.setString(1, serviceCode),
                 new ServiceRowMapper());
+
+        if (serviceLayananList.size() < 1) {
+            return null;
+        }
 
         return serviceLayananList.get(0);
     }
