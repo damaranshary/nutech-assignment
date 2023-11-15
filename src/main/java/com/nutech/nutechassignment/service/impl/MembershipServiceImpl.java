@@ -1,10 +1,12 @@
 package com.nutech.nutechassignment.service.impl;
 
 import com.nutech.nutechassignment.model.User;
+import com.nutech.nutechassignment.model.UserRole;
 import com.nutech.nutechassignment.model.request.RegisterUserRequest;
 import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
 import com.nutech.nutechassignment.repository.UserRepository;
+import com.nutech.nutechassignment.repository.UserRoleRepository;
 import com.nutech.nutechassignment.service.CloudinaryService;
 import com.nutech.nutechassignment.service.MembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class MembershipServiceImpl implements MembershipService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private CloudinaryService cloudinaryService;
@@ -37,7 +42,18 @@ public class MembershipServiceImpl implements MembershipService {
         user.setProfileImage(null);
         user.setBalance(0L);
 
-        return userRepository.save(user);
+        int result = userRepository.save(user);
+
+        // we assign the user role after the user already registered in the database
+        if (result > 0 ){
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getEmail());
+            userRole.setRoleId("ROLE_USER");
+
+            userRoleRepository.save(userRole);
+        }
+
+        return result;
     }
 
     @Override
