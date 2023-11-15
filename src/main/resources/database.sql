@@ -84,6 +84,28 @@ CREATE TABLE t_service
 
 INSERT INTO t_service
 VALUES ('PAJAK', 'PAJAK PBB', 'https://nutech-integrasi.app/dummy.jpg', 40000);
+INSERT INTO t_service
+VALUES ('PLN', 'Listrik', 'https://nutech-integrasi.app/dummy.jpg', 10000);
+INSERT INTO t_service
+VALUES ('PDAM', 'PDAM Berlangganan', 'https://nutech-integrasi.app/dummy.jpg', 40000);
+INSERT INTO t_service
+VALUES ('PULSA', 'Pulsa', 'https://nutech-integrasi.app/dummy.jpg', 40000);
+INSERT INTO t_service
+VALUES ('PGN', 'PGN Berlangganan', 'https://nutech-integrasi.app/dummy.jpg', 50000);
+INSERT INTO t_service
+VALUES ('MUSIK', 'Musik Berlangganan', 'https://nutech-integrasi.app/dummy.jpg', 50000);
+INSERT INTO t_service
+VALUES ('TV', 'TV Berlangganan', 'https://nutech-integrasi.app/dummy.jpg', 50000);
+INSERT INTO t_service
+VALUES ('PAKET_DATA', 'Paket Data', 'https://nutech-integrasi.app/dummy.jpg', 50000);
+INSERT INTO t_service
+VALUES ('VOUCHER_GAME', 'Voucher Game', 'https://nutech-integrasi.app/dummy.jpg', 100000);
+INSERT INTO t_service
+VALUES ('VOUCHER_MAKANAN', 'Voucher Makanan', 'https://nutech-integrasi.app/dummy.jpg', 100000);
+INSERT INTO t_service
+VALUES ('QURBAN', 'Qurban', 'https://nutech-integrasi.app/dummy.jpg', 200000);
+INSERT INTO t_service
+VALUES ('ZAKAT', 'Zakat', 'https://nutech-integrasi.app/dummy.jpg', 300000);
 
 DROP TABLE IF EXISTS t_transaction;
 CREATE TABLE t_transaction
