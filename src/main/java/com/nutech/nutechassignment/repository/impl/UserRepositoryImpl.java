@@ -16,6 +16,23 @@ public class UserRepositoryImpl implements UserRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    public Integer save(User user) {
+        String sqlQuery = "INSERT INTO t_user " +
+                "(email, first_name, last_name, password, profile_image, balance)" +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        return jdbcTemplate.update(sqlQuery,
+                preparedStatement -> {
+                    preparedStatement.setString(1, user.getEmail());
+                    preparedStatement.setString(2, user.getFirstName());
+                    preparedStatement.setString(3, user.getLastName());
+                    preparedStatement.setString(4, user.getPassword());
+                    preparedStatement.setString(5, user.getProfileImage());
+                    preparedStatement.setLong(6, user.getBalance());
+                });
+    }
+
+    @Override
     public User findUserById(String email) {
         String sqlQuery = "SELECT * FROM t_user WHERE email = ?";
 

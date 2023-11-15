@@ -1,5 +1,6 @@
 package com.nutech.nutechassignment.service;
 
+import com.nutech.nutechassignment.model.request.RegisterUserRequest;
 import com.nutech.nutechassignment.model.request.UpdateUserImageRequest;
 import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public interface MembershipService {
+
+    Integer saveUser(RegisterUserRequest registerUserRequest);
 
     UserResponse findUserById(String email);
 

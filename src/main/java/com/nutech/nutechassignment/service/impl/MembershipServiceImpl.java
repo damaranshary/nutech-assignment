@@ -1,18 +1,18 @@
 package com.nutech.nutechassignment.service.impl;
 
 import com.nutech.nutechassignment.model.User;
-import com.nutech.nutechassignment.model.request.UpdateUserImageRequest;
+import com.nutech.nutechassignment.model.request.RegisterUserRequest;
 import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
 import com.nutech.nutechassignment.repository.UserRepository;
 import com.nutech.nutechassignment.service.CloudinaryService;
 import com.nutech.nutechassignment.service.MembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 @Service
 public class MembershipServiceImpl implements MembershipService {
@@ -22,6 +22,23 @@ public class MembershipServiceImpl implements MembershipService {
 
     @Autowired
     private CloudinaryService cloudinaryService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public Integer saveUser(RegisterUserRequest registerUserRequest) {
+        User user = new User();
+
+        user.setEmail(registerUserRequest.getEmail());
+        user.setFirstName(registerUserRequest.getFirst_name());
+        user.setLastName(registerUserRequest.getLast_name());
+        user.setPassword(passwordEncoder.encode(registerUserRequest.getPassword()));
+        user.setProfileImage(null);
+        user.setBalance(0L);
+
+        return userRepository.save(user);
+    }
 
     @Override
     public UserResponse findUserById(String email) {
