@@ -19,8 +19,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     public String uploadImageToCloudinaryService(MultipartFile image) throws IOException {
         Map data = this.cloudinary.uploader().upload(image.getBytes(), Map.of());
 
-        String cloudinaryUrl = (String) data.get("url");
-
-        return cloudinaryUrl;
+        return (String) data.get("url");
     }
 }
