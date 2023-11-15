@@ -26,6 +26,18 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
+    public List<Transaction> findAllTransactionByUser_IdWithLimitAndWithOffset(String email, Integer limit, Integer offset) {
+        String sqlQuery = "SELECT * FROM t_transaction WHERE user_id = ? LIMIT ? OFFSET ?";
+
+        return jdbcTemplate.query(sqlQuery,
+                preparedStatement -> {
+                    preparedStatement.setString(1, email);
+                    preparedStatement.setInt(2, limit);
+                    preparedStatement.setInt(3, offset);
+                }, new TransactionRowMapper());
+    }
+
+    @Override
     public Integer save(Transaction transaction) {
         String sqlQuery = "INSERT INTO t_transaction " +
                 "(invoice_number, transaction_type, description, total_amount, created_on, user_id) " +

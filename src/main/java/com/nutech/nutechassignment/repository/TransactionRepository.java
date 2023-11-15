@@ -11,5 +11,7 @@ public interface TransactionRepository {
 
     List<Transaction> findAllTransactionByUser_Id(String email);
 
+    List<Transaction> findAllTransactionByUser_IdWithLimitAndWithOffset(String email, Integer limit, Integer offset);
+
     Integer save(Transaction transaction);
 }

@@ -1,5 +1,7 @@
 package com.nutech.nutechassignment.controller;
 
+import com.cloudinary.api.exceptions.BadRequest;
+import com.nutech.nutechassignment.exception.TransactionHistoryException;
 import com.nutech.nutechassignment.model.WebResponse;
 import com.nutech.nutechassignment.model.request.TopUpRequest;
 import com.nutech.nutechassignment.model.request.TransactionRequest;
@@ -13,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class TransactionController {
@@ -23,29 +26,39 @@ public class TransactionController {
     @GetMapping(value = "/balance",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<BalanceResponse> getBalance(Authentication authentication) {
-        BalanceResponse balanceResponse = transactionService.getBalance(authentication.getName());
+        // we will try to get the email from securityContextHolder from spring security using the JWT header token
+        String userEmail = authentication.getName();
+        BalanceResponse balanceResponse = transactionService.getBalance(userEmail);
 
         return WebResponse.<BalanceResponse>builder()
-                .data(balanceResponse)
-                .status(402).message("success").build();
+                .status(0).data(balanceResponse)
+                .message("Get balance success").build();
     }
 
     @PostMapping(path = "/topup",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<BalanceResponse> topUpBalance(@RequestBody TopUpRequest topUpRequest, Authentication authentication) {
-        BalanceResponse balanceResponse = transactionService.doTopUp(authentication.getName(), topUpRequest.getTotal_amount());
+    public WebResponse<BalanceResponse> topUpBalance(@RequestBody TopUpRequest topUpRequest,
+                                                     Authentication authentication) {
+        String userEmail = authentication.getName();
 
-        return WebResponse.<BalanceResponse>builder().status(200).data(balanceResponse).message("Success").build();
+        BalanceResponse balanceResponse = transactionService.doTopUp(userEmail, topUpRequest);
+        return WebResponse.<BalanceResponse>builder()
+                .status(0).data(balanceResponse)
+                .message("Top up balance success").build();
     }
 
     @PostMapping(path = "/transaction",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<TransactionServiceResponse> doTransaction(@RequestBody TransactionRequest request, Authentication authentication) {
-        TransactionServiceResponse transactionResponse = transactionService.doTransaction(authentication.getName(), request.getService_code());
+    public WebResponse<TransactionServiceResponse> doTransaction(@RequestBody TransactionRequest transactionRequest,
+                                                                 Authentication authentication) {
+        String userEmail = authentication.getName();
 
-        return WebResponse.<TransactionServiceResponse>builder().status(200).data(transactionResponse).message("success").build();
+        TransactionServiceResponse transactionResponse = transactionService.doTransaction(userEmail, transactionRequest);
+        return WebResponse.<TransactionServiceResponse>builder()
+                .status(0).data(transactionResponse)
+                .message("Transaction success").build();
     }
 
     @GetMapping("/transaction/history")
@@ -53,9 +66,34 @@ public class TransactionController {
             @RequestParam(name = "offset", required = false) Integer offset,
             @RequestParam(name = "limit", required = false) Integer limit,
             Authentication authentication) {
-        List<TransactionHistoryResponse> transactionHistory = transactionService.getTransactionHistory(authentication.getName());
+        String userEmail = authentication.getName();
 
-        return WebResponse.<List<TransactionHistoryResponse>>builder().status(200).data(transactionHistory).message("success").build();
+        List<TransactionHistoryResponse> transactionHistory;
 
+        if (limit == null) {
+            // if the offset is exists without a limit, we throw exception
+            if (offset != null) {
+                throw new TransactionHistoryException("You can't set an offset without a limit");
+            }
+
+            // we will search without an offset and limit if both offset and limit are null
+            transactionHistory = transactionService
+                    .getTransactionHistoryByUser_Email(userEmail);
+        } else {
+            // if the limit is lesser than zero, we throw exception
+            if (limit <= 0) {
+                throw new TransactionHistoryException("You just can't set your limit less than 0, there will be no data");
+            }
+
+            transactionHistory = transactionService
+                    .getTransactionHistoryByUser_EmailWithLimitAndWithOffset(userEmail, limit,
+                            Objects.requireNonNullElse(offset, 0));
+            // basically, since the query in Repository require an offset (not null) we will assign 0
+            // as the offset value if the offset are null
+        }
+
+        return WebResponse.<List<TransactionHistoryResponse>>builder()
+                .status(0).data(transactionHistory)
+                .message("Get transaction history success").build();
     }
 }
