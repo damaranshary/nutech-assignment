@@ -20,13 +20,17 @@ public class InformationController {
     public WebResponse<List<BannerResponse>> getBanner() {
         List<BannerResponse> bannerResponseList = informationService.getAllBanner();
 
-        return WebResponse.<List<BannerResponse>>builder().status(200).data(bannerResponseList).message("success").build();
+        return WebResponse.<List<BannerResponse>>builder()
+                .status(0).data(bannerResponseList)
+                .message("Get banners success").build();
     }
 
     @GetMapping("/services")
     public WebResponse<List<ServiceResponse>> getServices() {
         List<ServiceResponse> serviceResponseList = informationService.getAllService();
 
-        return WebResponse.<List<ServiceResponse>>builder().status(200).data(serviceResponseList).message("success").build();
+        return WebResponse.<List<ServiceResponse>>builder()
+                .status(0).data(serviceResponseList)
+                .message("Get services success").build();
     }
 }

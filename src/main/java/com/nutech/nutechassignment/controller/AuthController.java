@@ -12,9 +12,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -40,12 +40,16 @@ public class AuthController {
         JwtResponse jwtResponse = new JwtResponse();
         jwtResponse.setToken(token);
 
-        return WebResponse.<JwtResponse>builder().status(200).data(jwtResponse).message("Login successful").build();
+        return WebResponse.<JwtResponse>builder()
+                .status(0).data(jwtResponse)
+                .message("Login successful").build();
     }
 
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (UsernameNotFoundException e) {
+           throw new Exception("EMAIL_NOT_FOUND", e);
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
