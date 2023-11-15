@@ -1,8 +1,11 @@
 package com.nutech.nutechassignment.service;
 
+import com.nutech.nutechassignment.model.request.UpdateUserImageRequest;
 import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public interface MembershipService {
@@ -11,6 +14,6 @@ public interface MembershipService {
 
     UserResponse updateUser(UpdateUserRequest updateUserRequest, String email);
 
-    UserResponse updateUserProfileImage(String profileImage, String email);
+    UserResponse updateUserProfileImage(MultipartFile image, String email) throws IOException;
 
 }
