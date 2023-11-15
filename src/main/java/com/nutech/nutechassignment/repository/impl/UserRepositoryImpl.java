@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -31,16 +32,24 @@ public class UserRepositoryImpl implements UserRepository {
     public Integer updateBalance(String email, Long updatedBalance) {
         String sqlQuery = "UPDATE t_user SET balance = ? WHERE email = ?";
 
-        return jdbcTemplate.update(sqlQuery, updatedBalance, email);
+        return jdbcTemplate.update(sqlQuery, preparedStatement -> {
+            preparedStatement.setLong(1, updatedBalance);
+            preparedStatement.setString(2, email);
+        });
     }
 
     @Override
     public User updateUser(User user) {
         String sqlQuery = "UPDATE t_user SET first_name = ?, last_name = ? WHERE email = ?";
 
-        int result = jdbcTemplate.update(sqlQuery, user.getFirstName(), user.getLastName(), user.getEmail());
+        int result = jdbcTemplate.update(sqlQuery,
+                preparedStatement -> {
+                    preparedStatement.setString(1, user.getFirstName());
+                    preparedStatement.setString(2, user.getLastName());
+                    preparedStatement.setString(3, user.getEmail());
+                });
 
-        if (result <= 0 ) {
+        if (result <= 0) {
             return null;
         }
 
@@ -48,9 +57,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User updateUserImageById(String email, String urlImage) {
-        String sqlQuery = "UPDATE t_user SET url_image = ? WHERE email = ?";
-        int result = jdbcTemplate.update(sqlQuery, urlImage, email);
+    public User updateUserProfileImageById(String profileImage, String email) {
+        String sqlQuery = "UPDATE t_user SET profile_image = ? WHERE email = ?";
+
+        int result = jdbcTemplate.update(sqlQuery,
+                preparedStatement -> {
+                    preparedStatement.setString(1, profileImage);
+                    preparedStatement.setString(2, email);
+                });
 
         if (result <= 0) {
             return null;

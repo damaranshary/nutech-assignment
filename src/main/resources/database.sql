@@ -1,21 +1,27 @@
+DROP DATABASE sims_ppob;
 CREATE DATABASE sims_ppob;
 USE sims_ppob;
 
 DROP TABLE IF EXISTS t_user;
 CREATE TABLE t_user
 (
-    EMAIL      VARCHAR(100) NOT NULL,
-    FIRST_NAME VARCHAR(100) NOT NULL,
-    LAST_NAME  VARCHAR(100),
-    PASSWORD   VARCHAR(100) NOT NULL,
-    BALANCE    BIGINT       NOT NULL,
+    EMAIL         VARCHAR(100) NOT NULL,
+    FIRST_NAME    VARCHAR(100) NOT NULL,
+    LAST_NAME     VARCHAR(100),
+    PASSWORD      VARCHAR(100) NOT NULL,
+    PROFILE_IMAGE VARCHAR(255),
+    BALANCE       BIGINT       NOT NULL,
     PRIMARY KEY (EMAIL)
 ) ENGINE InnoDB;
 
-INSERT INTO t_user VALUES ('damar@email.com', 'Damar', 'Galih Anshary', 'damar123', 125000);
-INSERT INTO t_user VALUES ('damaruser@email.com', 'Damar','damar123', 'Anshary', 0);
+INSERT INTO t_user
+VALUES ('damar@email.com', 'Damar', 'Galih Anshary', 'damar123', 'https://yoururlapi.com/image', 125000);
 
-SELECT * FROM t_user;
+INSERT INTO t_user
+VALUES ('damaruser@email.com', 'Damar', 'Anshary', 'damar123', 'https://yoururlapi.com/image', 0);
+
+SELECT *
+FROM t_user;
 
 DROP TABLE IF EXISTS t_role;
 CREATE TABLE t_role
@@ -25,8 +31,10 @@ CREATE TABLE t_role
     PRIMARY KEY (ID)
 ) ENGINE InnoDB;
 
-INSERT INTO t_role (ID,NAME) VALUES ('ROLE_ADMIN','Role Administrator');
-INSERT INTO t_role (ID,NAME) VALUES ('ROLE_USER','Role User');
+INSERT INTO t_role (ID, NAME)
+VALUES ('ROLE_ADMIN', 'Role Administrator');
+INSERT INTO t_role (ID, NAME)
+VALUES ('ROLE_USER', 'Role User');
 
 DROP TABLE IF EXISTS t_user_role;
 CREATE TABLE t_user_role
@@ -38,8 +46,10 @@ CREATE TABLE t_user_role
     FOREIGN KEY fk_userrole_role (ROLE_ID) REFERENCES t_role (ID)
 ) ENGINE InnoDB;
 
-INSERT INTO t_user_role VALUES ('damar@email.com', 'ROLE_ADMIN');
-INSERT INTO t_user_role VALUES ('damaruser@email.com', 'ROLE_USER');
+INSERT INTO t_user_role
+VALUES ('damar@email.com', 'ROLE_ADMIN');
+INSERT INTO t_user_role
+VALUES ('damaruser@email.com', 'ROLE_USER');
 
 DROP TABLE IF EXISTS t_banner;
 CREATE TABLE t_banner
@@ -51,11 +61,16 @@ CREATE TABLE t_banner
     PRIMARY KEY (ID)
 ) ENGINE InnoDB;
 
-INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 1', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
-INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 2', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
-INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 3', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
-INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 4', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
-INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION) VALUES ('Banner 5', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION)
+VALUES ('Banner 1', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION)
+VALUES ('Banner 2', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION)
+VALUES ('Banner 3', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION)
+VALUES ('Banner 4', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
+INSERT INTO t_banner (BANNER_NAME, BANNER_IMAGE, DESCRIPTION)
+VALUES ('Banner 5', 'https://nutech-integrasi.app/dummy.jpg', 'Lerem Ipsum Dolor sit amet');
 
 DROP TABLE IF EXISTS t_service;
 CREATE TABLE t_service
@@ -67,7 +82,8 @@ CREATE TABLE t_service
     PRIMARY KEY (CODE)
 ) ENGINE InnoDB;
 
-INSERT INTO t_service VALUES ('PAJAK', 'PAJAK PBB', 'https://nutech-integrasi.app/dummy.jpg', 40000);
+INSERT INTO t_service
+VALUES ('PAJAK', 'PAJAK PBB', 'https://nutech-integrasi.app/dummy.jpg', 40000);
 
 DROP TABLE IF EXISTS t_transaction;
 CREATE TABLE t_transaction

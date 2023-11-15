@@ -2,8 +2,6 @@ package com.nutech.nutechassignment.repository;
 
 import com.nutech.nutechassignment.model.User;
 
-import java.sql.SQLException;
-
 public interface UserRepository {
 
     User findUserById(String email);
@@ -12,5 +10,5 @@ public interface UserRepository {
 
     User updateUser(User user);
 
-    User updateUserImageById(String email, String urlImage);
+    User updateUserProfileImageById( String profileImage, String email);
 }

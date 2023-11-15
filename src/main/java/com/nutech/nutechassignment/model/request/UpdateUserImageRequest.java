@@ -18,5 +18,5 @@ public class UpdateUserImageRequest {
     private String email;
 
     @NotBlank
-    private MultipartFile file;
+    private String profile_image;
 }

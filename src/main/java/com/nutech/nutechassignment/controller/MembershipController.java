@@ -2,6 +2,8 @@ package com.nutech.nutechassignment.controller;
 
 import com.nutech.nutechassignment.dto.UserDto;
 import com.nutech.nutechassignment.model.WebResponse;
+import com.nutech.nutechassignment.model.request.UpdateUserImageRequest;
+import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
 import com.nutech.nutechassignment.service.MembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,33 +14,44 @@ import org.springframework.web.multipart.MultipartFile;
 import java.sql.SQLException;
 
 @RestController
+@RequestMapping("/profile")
 public class MembershipController {
 
     @Autowired
     private MembershipService membershipService;
 
-    @GetMapping(path ="/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<UserResponse> getProfile()  {
-        System.out.println("DO SOMETHING");
         UserResponse user = membershipService.findUserById("damar@email.com");
 
-        System.out.println(user);
         return WebResponse.<UserResponse>builder()
                 .status(200)
                 .data(user)
-                .message("hahahaha")
+                .message("success")
                 .build();
     }
 
     @PutMapping(value = "/update")
-    public void updateProfile(@RequestBody UserDto userDto) {
+    public WebResponse<UserResponse> updateProfile(@RequestBody UpdateUserRequest userRequest) {
+        UserResponse user = membershipService.updateUser(userRequest, "damar@email.com");
 
+        return WebResponse.<UserResponse>builder()
+                .status(200)
+                .data(user)
+                .message("success")
+                .build();
     }
 
     @PutMapping(value = "/image",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public void updateProfileImage(@RequestBody MultipartFile image) {
+    public WebResponse<UserResponse> updateProfileImage(@RequestBody UpdateUserImageRequest updateUserImageRequest) {
+        UserResponse user = membershipService.updateUserProfileImage(updateUserImageRequest.getProfile_image(), "damar@email.com");
 
+        return WebResponse.<UserResponse>builder()
+                .status(200)
+                .data(user)
+                .message("success")
+                .build();
     }
 }

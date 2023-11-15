@@ -25,5 +25,8 @@ public class User {
 
     private String password;
 
+    @Column("profile_image")
+    private String profileImage;
+
     private Long balance;
 }
