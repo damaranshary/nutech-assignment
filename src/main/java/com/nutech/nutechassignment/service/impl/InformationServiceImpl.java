@@ -1,4 +1,4 @@
-package com.nutech.nutechassignment.service;
+package com.nutech.nutechassignment.service.impl;
 
 import com.nutech.nutechassignment.model.Banner;
 import com.nutech.nutechassignment.model.ServiceLayanan;
@@ -6,6 +6,7 @@ import com.nutech.nutechassignment.model.response.BannerResponse;
 import com.nutech.nutechassignment.model.response.ServiceResponse;
 import com.nutech.nutechassignment.repository.BannerRepository;
 import com.nutech.nutechassignment.repository.ServiceRepository;
+import com.nutech.nutechassignment.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class InformationServiceImpl implements InformationService{
+public class InformationServiceImpl implements InformationService {
     @Autowired
     private BannerRepository bannerRepository;
 

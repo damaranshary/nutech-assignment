@@ -15,6 +15,6 @@ public interface TransactionService {
 
     BalanceResponse doTopUp(String email, Long totalTopUp);
 
-    TransactionServiceResponse doTransaction(String email, String service_code);
+    TransactionServiceResponse doTransaction(String email, String serviceCode);
 
 }

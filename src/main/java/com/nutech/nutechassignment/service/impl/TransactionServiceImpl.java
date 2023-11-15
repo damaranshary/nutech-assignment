@@ -1,4 +1,4 @@
-package com.nutech.nutechassignment.service;
+package com.nutech.nutechassignment.service.impl;
 
 import com.nutech.nutechassignment.model.ServiceLayanan;
 import com.nutech.nutechassignment.model.Transaction;
@@ -9,6 +9,7 @@ import com.nutech.nutechassignment.model.response.TransactionServiceResponse;
 import com.nutech.nutechassignment.repository.ServiceRepository;
 import com.nutech.nutechassignment.repository.TransactionRepository;
 import com.nutech.nutechassignment.repository.UserRepository;
+import com.nutech.nutechassignment.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionServiceResponse doTransaction(String email, String service_code) {
-        ServiceLayanan serviceLayanan = serviceRepository.findServiceLayananByService_Code(service_code);
+    public TransactionServiceResponse doTransaction(String email, String serviceCode) {
+        ServiceLayanan serviceLayanan = serviceRepository.findServiceLayananById(serviceCode);
         User user = userRepository.findUserById(email);
 
         // if the user doesn't have enough balance we will throw an exception
@@ -83,10 +84,10 @@ public class TransactionServiceImpl implements TransactionService {
     public BalanceResponse doTopUp(String email, Long totalTopUp) {
         User user = userRepository.findUserById(email);
 
-        BalanceResponse balance = new BalanceResponse();
+        BalanceResponse balanceResponse = new BalanceResponse();
         Transaction transaction = new Transaction();
 
-        balance.setBalance(user.getBalance() + totalTopUp);
+        balanceResponse.setBalance(user.getBalance() + totalTopUp);
 
         String generatedInvoice = UUID.randomUUID().toString();
         Timestamp createdOn = new Timestamp(System.currentTimeMillis());
@@ -100,9 +101,9 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionRepository.save(transaction);
 
-        userRepository.updateBalance(email, balance.getBalance());
+        userRepository.updateBalance(email, balanceResponse.getBalance());
 
-        return balance;
+        return balanceResponse;
     }
 
     private TransactionServiceResponse convertTransactionToTransactionServiceResponse(Transaction transaction, ServiceLayanan serviceLayanan) {

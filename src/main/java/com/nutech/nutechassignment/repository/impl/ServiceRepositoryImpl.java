@@ -28,11 +28,11 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         return jdbcTemplate.query(sqlQuery, new ServiceRowMapper());
     }
 
-    public ServiceLayanan findServiceLayananByService_Code(String service_code) {
+    public ServiceLayanan findServiceLayananById(String serviceCode) {
         String sqlQuery = "SELECT * FROM t_service WHERE code = ?";
 
         List<ServiceLayanan> serviceLayananList = jdbcTemplate.query(sqlQuery,
-                preparedStatement -> preparedStatement.setString(1, service_code),
+                preparedStatement -> preparedStatement.setString(1, serviceCode),
                 new ServiceRowMapper());
 
         return serviceLayananList.get(0);
