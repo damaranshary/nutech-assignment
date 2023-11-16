@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 
 @Component
@@ -45,7 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 log.error("JWT Token has expired");
             }
         } else if (requestTokenHeader != null) {
-            throw new AuthenticationException();
+            log.warn("JWT token does not begin with Bearer String");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
