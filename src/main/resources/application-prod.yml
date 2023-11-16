@@ -10,7 +10,7 @@ spring:
       max-request-size: 10MB
 
 jwt:
-  secret: prodemy
+  secret: ${PROD_JWT_SECRET}
 
 cloudinary:
   name: ${PROD_CLOUDINARY_NAME}
