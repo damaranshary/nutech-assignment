@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
@@ -154,5 +155,16 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    // Add Runtime Exception
+    @ExceptionHandler({RuntimeException.class})
+    @ResponseBody
+    public ResponseEntity<WebResponse<Object>> handleIOException(Exception e) {
 
+        WebResponse<Object> response = new WebResponse<>();
+        response.setStatus(400);
+        response.setMessage(e.getMessage());
+        response.setData(null);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 }
