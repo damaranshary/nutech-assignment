@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+    url: jdbc:${PROD_DB_URL}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+cloudinary:
+  name: ${PROD_CLOUDINARY_NAME}
+  api-key: ${PROD_CLOUDINARY_API_KEY}
+  api-secret : ${PROD_CLOUDINARY_API_SECRET}
