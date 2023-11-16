@@ -9,6 +9,8 @@ import com.nutech.nutechassignment.model.response.TransactionHistoryResponse;
 import com.nutech.nutechassignment.model.response.TransactionServiceResponse;
 import com.nutech.nutechassignment.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
+@Tag(name = "Module Transaction")
 @RestController
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Get Balance API <br> Used for getting current balance from logged in user (need an authorization token)")
     @GetMapping(value = "/balance",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +40,7 @@ public class TransactionController {
                 .message("Get balance success").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Top Up user API <br> Used for top up balance for the logged in user (need an authorization token)")
     @PostMapping(path = "/topup",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -50,6 +55,7 @@ public class TransactionController {
                 .message("Top up balance success").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Transaction API <br> Used for doing transaction by logged in user (need an authorization token)")
     @PostMapping(path = "/transaction",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -64,6 +70,7 @@ public class TransactionController {
                 .message("Transaction success").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Transaction History API <br> Used to get a list of transaction the logged in user completed (need an authorization token)")
     @GetMapping(path = "/transaction/history",
             produces = MediaType.APPLICATION_JSON_VALUE)

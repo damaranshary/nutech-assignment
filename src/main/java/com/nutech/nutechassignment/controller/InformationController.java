@@ -5,6 +5,8 @@ import com.nutech.nutechassignment.model.response.BannerResponse;
 import com.nutech.nutechassignment.model.response.ServiceResponse;
 import com.nutech.nutechassignment.service.InformationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "Module Information")
 @RestController
 public class InformationController {
 
@@ -29,6 +32,7 @@ public class InformationController {
                 .message("Get banners success").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "API Services <br> Used for getting a list of services (need an authorization token)")
     @GetMapping(path = "/services",
             produces = MediaType.APPLICATION_JSON_VALUE)

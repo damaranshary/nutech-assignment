@@ -9,6 +9,8 @@ import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
 import com.nutech.nutechassignment.service.MembershipService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Objects;
 
+@Tag(name = "Module Membership")
 @RestController
 @RequestMapping()
 public class MembershipController {
@@ -51,6 +54,7 @@ public class MembershipController {
                 .message("Registration success, you can login with your credentials").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Profile user API <br> Used for getting a detailed info from logged in user (need an authorization token)")
     @GetMapping(
             path = "/profile",
@@ -64,6 +68,7 @@ public class MembershipController {
                 .message("Get profile success").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Update profile user API <br> Used to update users info (name) (need an authorization token)")
     @PutMapping(
             path = "/profile/update",
@@ -79,6 +84,7 @@ public class MembershipController {
                 .message("Profile data successfully updated").build();
     }
 
+    @SecurityRequirement(name = "Token Bearer")
     @Operation(description = "Update profile image user API <br> Used to update user profile image (need an authorization token)")
     @PutMapping(value = "/profile/image",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
