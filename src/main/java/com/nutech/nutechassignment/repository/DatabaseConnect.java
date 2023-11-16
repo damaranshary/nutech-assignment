@@ -5,11 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+// this will be used only if we didn't use jdbcTemplate
 public class DatabaseConnect {
     public static PreparedStatement dbConnect(String sqlQuery) {
-        String url = "jdbc:mysql://localhost:3306/sims_ppob";
-        String username = "root";
-        String password = "";
+        String url = "your-sql-url";
+        String username = "your-sql-username";
+        String password = "your-sql-password";
 
         // we will try to connect to the db
         try {

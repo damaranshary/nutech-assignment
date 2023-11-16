@@ -8,6 +8,7 @@ import com.nutech.nutechassignment.model.request.UpdateUserImageRequest;
 import com.nutech.nutechassignment.model.request.UpdateUserRequest;
 import com.nutech.nutechassignment.model.response.UserResponse;
 import com.nutech.nutechassignment.service.MembershipService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +26,7 @@ public class MembershipController {
     @Autowired
     private MembershipService membershipService;
 
+    @Operation(description = "Profile user API <br> Used to register new user (doesn't need an authorization token)")
     @PostMapping(
             path = "/registration",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -49,6 +51,7 @@ public class MembershipController {
                 .message("Registration success, you can login with your credentials").build();
     }
 
+    @Operation(description = "Profile user API <br> Used for getting a detailed info from logged in user (need an authorization token)")
     @GetMapping(
             path = "/profile",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,6 +64,7 @@ public class MembershipController {
                 .message("Get profile success").build();
     }
 
+    @Operation(description = "Update profile user API <br> Used to update users info (name) (need an authorization token)")
     @PutMapping(
             path = "/profile/update",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -75,6 +79,7 @@ public class MembershipController {
                 .message("Profile data successfully updated").build();
     }
 
+    @Operation(description = "Update profile image user API <br> Used to update user profile image (need an authorization token)")
     @PutMapping(value = "/profile/image",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -4,7 +4,9 @@ import com.nutech.nutechassignment.model.WebResponse;
 import com.nutech.nutechassignment.model.response.BannerResponse;
 import com.nutech.nutechassignment.model.response.ServiceResponse;
 import com.nutech.nutechassignment.service.InformationService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +18,9 @@ public class InformationController {
     @Autowired
     private InformationService informationService;
 
-    @GetMapping("/banner")
+    @Operation(description = "API Banner Public <br> Used for getting a list of banner (doesn't need an authorization token)")
+    @GetMapping(path = "/banner",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<List<BannerResponse>> getBanner() {
         List<BannerResponse> bannerResponseList = informationService.getAllBanner();
 
@@ -25,7 +29,9 @@ public class InformationController {
                 .message("Get banners success").build();
     }
 
-    @GetMapping("/services")
+    @Operation(description = "API Services <br> Used for getting a list of services (need an authorization token)")
+    @GetMapping(path = "/services",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<List<ServiceResponse>> getServices() {
         List<ServiceResponse> serviceResponseList = informationService.getAllService();
 

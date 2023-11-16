@@ -42,17 +42,18 @@ public class SecurityConfig {
                         .authorizeHttpRequests(
                                 auth -> auth
                                         .requestMatchers(
-                                                "/login**",
-                                                "/registration**",
-                                                "/banner**").permitAll()
+                                                "/login",
+                                                "/registration",
+                                                "/v3/api-docs/**",
+                                                "/swagger-ui/**").permitAll()
                         )
                         .authorizeHttpRequests(
                                 auth -> auth
                                         .anyRequest().authenticated()
                         )
                         .exceptionHandling(
-                               auth -> auth
-                                       .authenticationEntryPoint(authenticationEntryPoint)
+                                auth -> auth
+                                        .authenticationEntryPoint(authenticationEntryPoint)
                         )
                         .sessionManagement(
                                 auth -> auth

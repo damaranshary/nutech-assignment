@@ -5,6 +5,7 @@ import com.nutech.nutechassignment.config.MyUserDetailsService;
 import com.nutech.nutechassignment.model.WebResponse;
 import com.nutech.nutechassignment.model.request.JwtRequest;
 import com.nutech.nutechassignment.model.response.JwtResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +30,9 @@ public class AuthController {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
-    @PostMapping(path = "/login",
+    @Operation(description = "Login using registered email and password")
+    @PostMapping(
+            path = "/login",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<JwtResponse> login(@RequestBody JwtRequest authenticationRequest) throws Exception {

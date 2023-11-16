@@ -1,6 +1,5 @@
 package com.nutech.nutechassignment.controller;
 
-import com.cloudinary.api.exceptions.BadRequest;
 import com.nutech.nutechassignment.exception.TransactionHistoryException;
 import com.nutech.nutechassignment.model.WebResponse;
 import com.nutech.nutechassignment.model.request.TopUpRequest;
@@ -9,6 +8,7 @@ import com.nutech.nutechassignment.model.response.BalanceResponse;
 import com.nutech.nutechassignment.model.response.TransactionHistoryResponse;
 import com.nutech.nutechassignment.model.response.TransactionServiceResponse;
 import com.nutech.nutechassignment.service.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,9 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @Operation(description = "Get Balance API <br> Used for getting current balance from logged in user (need an authorization token)")
     @GetMapping(value = "/balance",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<BalanceResponse> getBalance(Authentication authentication) {
         // we will try to get the email from securityContextHolder from spring security using the JWT header token
@@ -35,6 +37,7 @@ public class TransactionController {
                 .message("Get balance success").build();
     }
 
+    @Operation(description = "Top Up user API <br> Used for top up balance for the logged in user (need an authorization token)")
     @PostMapping(path = "/topup",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,6 +51,7 @@ public class TransactionController {
                 .message("Top up balance success").build();
     }
 
+    @Operation(description = "Transaction API <br> Used for doing transaction by logged in user (need an authorization token)")
     @PostMapping(path = "/transaction",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +65,9 @@ public class TransactionController {
                 .message("Transaction success").build();
     }
 
-    @GetMapping("/transaction/history")
+    @Operation(description = "Transaction History API <br> Used to get a list of transaction the logged in user completed (need an authorization token)")
+    @GetMapping(path = "/transaction/history",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<List<TransactionHistoryResponse>> getTransactionHistory(
             @RequestParam(name = "offset", required = false) Integer offset,
             @RequestParam(name = "limit", required = false) Integer limit,
