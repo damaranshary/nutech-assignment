@@ -25,7 +25,6 @@ public class TransactionController {
 
     @Operation(description = "Get Balance API <br> Used for getting current balance from logged in user (need an authorization token)")
     @GetMapping(value = "/balance",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<BalanceResponse> getBalance(Authentication authentication) {
         // we will try to get the email from securityContextHolder from spring security using the JWT header token
