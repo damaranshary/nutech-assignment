@@ -9,6 +9,9 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
+jwt:
+  secret: prodemy
+
 cloudinary:
   name: ${PROD_CLOUDINARY_NAME}
   api-key: ${PROD_CLOUDINARY_API_KEY}
